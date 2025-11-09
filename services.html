@@ -37,6 +37,52 @@
             border-color: rgba(0, 212, 170, 0.3);
             box-shadow: 0 10px 30px rgba(0, 212, 170, 0.1);
         }
+
+        /* Улучшенные отступы для мобильных устройств */
+        @media (max-width: 768px) {
+            .service-card {
+                padding: 1.5rem !important;
+            }
+
+            .service-card .grid {
+                gap: 1rem !important;
+            }
+
+            .service-card button {
+                margin-top: 1.5rem !important;
+                padding: 1rem !important;
+                font-size: 1rem !important;
+            }
+
+            .service-card .bg-gray-800 {
+                padding: 1rem !important;
+                margin-bottom: 1rem;
+            }
+
+            .service-card p {
+                margin-bottom: 1.5rem !important;
+            }
+
+            .service-card .flex.items-center {
+                margin-bottom: 1.5rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-card {
+                padding: 1.25rem !important;
+            }
+
+            .service-card .grid {
+                grid-template-columns: 1fr !important;
+                gap: 1.25rem !important;
+            }
+
+            .service-card button {
+                margin-top: 2rem !important;
+                padding: 1.25rem !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -77,7 +123,7 @@
                 <!-- Transcription Service -->
                 <div class="service-card rounded-2xl p-8">
                     <div class="flex items-center mb-6">
-                        <img src="resources/transcription-hero.png" alt="Транскрибация" class="w-20 h-20 rounded-xl mr-6">
+                        <img src="resources/transcription-hero.png" alt="Транскрибация" class="w-20 h-20 rounded-xl mr-6" loading="lazy" width="80" height="80">
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Главный Транскрибатор</h3>
                             <span class="text-teal-400 font-semibold">от 500₽</span>
@@ -115,7 +161,7 @@
                 <!-- YouTube Thumbnails -->
                 <div class="service-card rounded-2xl p-8">
                     <div class="flex items-center mb-6">
-                        <img src="resources/thumbnails-hero.png" alt="Превью YouTube" class="w-20 h-20 rounded-xl mr-6">
+                        <img src="resources/thumbnails-hero.png" alt="Превью YouTube" class="w-20 h-20 rounded-xl mr-6" loading="lazy" width="80" height="80">
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Директор по превью</h3>
                             <span class="text-purple-400 font-semibold">от 300₽</span>
@@ -153,7 +199,7 @@
                 <!-- Marketplace Cards -->
                 <div class="service-card rounded-2xl p-8">
                     <div class="flex items-center mb-6">
-                        <img src="resources/marketplace-hero.png" alt="Карточки товаров" class="w-20 h-20 rounded-xl mr-6">
+                        <img src="resources/marketplace-hero.png" alt="Карточки товаров" class="w-20 h-20 rounded-xl mr-6" loading="lazy" width="80" height="80">
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Маркетплейс-продюсер</h3>
                             <span class="text-green-400 font-semibold">от 2000₽</span>
@@ -191,7 +237,7 @@
                 <!-- Personality Analysis -->
                 <div class="service-card rounded-2xl p-8">
                     <div class="flex items-center mb-6">
-                        <img src="resources/personality-hero.png" alt="Распаковка личности" class="w-20 h-20 rounded-xl mr-6">
+                        <img src="resources/personality-hero.png" alt="Распаковка личности" class="w-20 h-20 rounded-xl mr-6" loading="lazy" width="80" height="80">
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Распаковка личности</h3>
                             <span class="text-blue-400 font-semibold">от 1500₽</span>
@@ -229,7 +275,7 @@
                 <!-- Marketing Services -->
                 <div class="service-card rounded-2xl p-8 lg:col-span-2">
                     <div class="flex items-center mb-6">
-                        <img src="resources/marketing-hero.png" alt="Маркетинг" class="w-20 h-20 rounded-xl mr-6">
+                        <img src="resources/marketing-hero.png" alt="Маркетинг" class="w-20 h-20 rounded-xl mr-6" loading="lazy" width="80" height="80">
                         <div>
                             <h3 class="text-2xl font-bold mb-2">Маркетолог</h3>
                             <span class="text-orange-400 font-semibold">от 5000₽</span>
@@ -270,6 +316,66 @@
                     </div>
                     <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-orange-400 to-red-500 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
                         Заказать маркетинг
+                    </button>
+                </div>
+
+                <!-- AI Fitness Assistant -->
+                <div class="service-card rounded-2xl p-8 lg:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-orange-600 to-red-600 rounded-xl mr-6 flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-3xl text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">AI-ассистент фитнес-тренера</h3>
+                            <span class="text-red-400 font-semibold">от 3000₽ в месяц</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Элитный AI-консультант мирового уровня для фитнес-тренеров. Сокращает рутинную работу на 80%.
+                        Планы тренировок, питание, психология клиента - всё за 15 минут вместо 5-7 часов в неделю.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-teal-400 mb-2">Возможности:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Планы тренировок за 15 мин</li>
+                                <li>• Программы питания</li>
+                                <li>• Психология клиента</li>
+                                <li>• Анализ прогресса</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-orange-400 mb-2">База знаний:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• 10 величайших экспертов</li>
+                                <li>• Марк Риппето</li>
+                                <li>• Чарльз Поликвин</li>
+                                <li>• Брет Контрерас</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-red-400 mb-2">Результаты:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Экономия 312 часов/мес</li>
+                                <li>• Больше клиентов</li>
+                                <li>• Меньше рутины</li>
+                                <li>• Выше качество</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-r from-orange-900/30 to-red-900/30 rounded-lg p-4 mb-6">
+                        <h4 class="font-bold text-orange-400 mb-2">Что входит:</h4>
+                        <ul class="text-sm text-gray-300 space-y-2">
+                            <li>✓ Диалоговые сессии с AI-консультантом</li>
+                            <li>✓ Автоматическое составление планов тренировок</li>
+                            <li>✓ Персонализированные программы питания</li>
+                            <li>✓ Психологический анализ и работа с клиентами</li>
+                            <li>✓ Методология "Интегративный Персонализированный Фитнес"</li>
+                            <li>✓ База знаний от 10 мировых экспертов</li>
+                        </ul>
+                    </div>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-orange-600 to-red-600 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
+                        Подключить AI-ассистента
                     </button>
                 </div>
             </div>
