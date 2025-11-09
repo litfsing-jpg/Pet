@@ -129,6 +129,27 @@ function openServiceModal(serviceType) {
                 'Пример рекламной кампании'
             ]
         },
+        fitness: {
+            title: 'AI-ассистент фитнес-тренера',
+            description: 'Элитный AI-консультант мирового уровня для фитнес-тренеров. Сокращает рутину на 80%.',
+            features: [
+                'Планы тренировок за 15 минут вместо 5-7 часов',
+                'Персонализированные программы питания',
+                'Психологический профиль клиента',
+                'Анализ прогресса и корректировки',
+                'Автоматическое ведение диалоговых сессий',
+                'База знаний из 10 величайших экспертов фитнеса',
+                'Интегративная персонализированная методология'
+            ],
+            price: 'от 3000₽ в месяц',
+            timeline: 'Моментальный доступ',
+            examples: [
+                'Экономия 312 часов в месяц для тренеров',
+                'Готовые планы тренировок под клиента',
+                'Автоматическое составление рационов питания',
+                'Психологическая работа с мотивацией клиентов'
+            ]
+        },
         custom: {
             title: 'Кастомные решения',
             description: 'Индивидуальные разработки под ваши задачи. Любые интеграции и автоматизации.',
@@ -255,15 +276,17 @@ window.addEventListener('scroll', function() {
     }
 });
 
-// Add loading animation for images
+// Add loading animation for images (optimized)
 document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('img');
+    const images = document.querySelectorAll('img[loading="lazy"]');
     images.forEach(img => {
-        img.addEventListener('load', function() {
-            this.style.opacity = '1';
-        });
-        img.style.opacity = '0';
-        img.style.transition = 'opacity 0.3s ease';
+        if (!img.complete) {
+            img.addEventListener('load', function() {
+                this.style.opacity = '1';
+            }, { once: true });
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.2s ease';
+        }
     });
 });
 

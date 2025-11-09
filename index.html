@@ -117,6 +117,83 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
+
+        /* Улучшенные отступы для мобильных устройств */
+        @media (max-width: 768px) {
+            .service-card {
+                padding: 1.25rem !important;
+            }
+
+            .service-card .mb-6 {
+                margin-bottom: 1.25rem !important;
+            }
+
+            .service-card .mb-4 {
+                margin-bottom: 1rem !important;
+            }
+
+            .service-card p {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .service-card .flex.justify-between {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 0.5rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                width: 95%;
+            }
+
+            .modal-content button {
+                padding: 0.875rem 1.5rem !important;
+                font-size: 0.95rem !important;
+                margin: 0.5rem !important;
+            }
+
+            .hero-bg {
+                padding-top: 5rem;
+            }
+
+            .hero-bg .space-y-8 {
+                gap: 1.5rem !important;
+            }
+
+            .hero-bg .flex.flex-col {
+                gap: 1rem !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .service-card {
+                padding: 1rem !important;
+            }
+
+            .service-card h3 {
+                font-size: 1.25rem !important;
+            }
+
+            .service-card p {
+                font-size: 0.875rem;
+            }
+
+            .modal-content {
+                padding: 1.25rem;
+            }
+
+            .modal-content h2 {
+                font-size: 1.5rem !important;
+            }
+
+            .modal-content button {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -162,7 +239,7 @@
                 </div>
                 <div class="floating-animation">
                     <div class="relative">
-                        <img src="resources/transcription-hero.png" alt="AI Services" class="w-full h-auto rounded-2xl shadow-2xl">
+                        <img src="resources/transcription-hero.png" alt="AI Services" class="w-full h-auto rounded-2xl shadow-2xl" width="600" height="400">
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-2xl"></div>
                     </div>
                 </div>
@@ -186,7 +263,7 @@
                 <!-- Transcription Service -->
                 <div class="service-card rounded-2xl p-6" onclick="openServiceModal('transcription')">
                     <div class="mb-6">
-                        <img src="resources/transcription-hero.png" alt="Транскрибация" class="w-full h-48 object-cover rounded-xl">
+                        <img src="resources/transcription-hero.png" alt="Транскрибация" class="w-full h-48 object-cover rounded-xl" loading="lazy" width="400" height="192">
                     </div>
                     <div class="flex items-center mb-4">
                         <i class="fas fa-microphone-alt text-3xl text-teal-400 mr-4"></i>
@@ -205,7 +282,7 @@
                 <!-- YouTube Thumbnails -->
                 <div class="service-card rounded-2xl p-6" onclick="openServiceModal('thumbnails')">
                     <div class="mb-6">
-                        <img src="resources/thumbnails-hero.png" alt="Превью YouTube" class="w-full h-48 object-cover rounded-xl">
+                        <img src="resources/thumbnails-hero.png" alt="Превью YouTube" class="w-full h-48 object-cover rounded-xl" loading="lazy" width="400" height="192">
                     </div>
                     <div class="flex items-center mb-4">
                         <i class="fas fa-image text-3xl text-purple-400 mr-4"></i>
@@ -224,7 +301,7 @@
                 <!-- Marketplace Cards -->
                 <div class="service-card rounded-2xl p-6" onclick="openServiceModal('marketplace')">
                     <div class="mb-6">
-                        <img src="resources/marketplace-hero.png" alt="Карточки товаров" class="w-full h-48 object-cover rounded-xl">
+                        <img src="resources/marketplace-hero.png" alt="Карточки товаров" class="w-full h-48 object-cover rounded-xl" loading="lazy" width="400" height="192">
                     </div>
                     <div class="flex items-center mb-4">
                         <i class="fas fa-shopping-cart text-3xl text-green-400 mr-4"></i>
@@ -243,7 +320,7 @@
                 <!-- Personality Analysis -->
                 <div class="service-card rounded-2xl p-6" onclick="openServiceModal('personality')">
                     <div class="mb-6">
-                        <img src="resources/personality-hero.png" alt="Распаковка личности" class="w-full h-48 object-cover rounded-xl">
+                        <img src="resources/personality-hero.png" alt="Распаковка личности" class="w-full h-48 object-cover rounded-xl" loading="lazy" width="400" height="192">
                     </div>
                     <div class="flex items-center mb-4">
                         <i class="fas fa-brain text-3xl text-blue-400 mr-4"></i>
@@ -262,7 +339,7 @@
                 <!-- Marketing Services -->
                 <div class="service-card rounded-2xl p-6" onclick="openServiceModal('marketing')">
                     <div class="mb-6">
-                        <img src="resources/marketing-hero.png" alt="Маркетинг" class="w-full h-48 object-cover rounded-xl">
+                        <img src="resources/marketing-hero.png" alt="Маркетинг" class="w-full h-48 object-cover rounded-xl" loading="lazy" width="400" height="192">
                     </div>
                     <div class="flex items-center mb-4">
                         <i class="fas fa-chart-line text-3xl text-orange-400 mr-4"></i>
@@ -278,6 +355,26 @@
                     </div>
                 </div>
 
+                <!-- AI Fitness Assistant -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('fitness')">
+                    <div class="mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-orange-600 to-red-600 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-dumbbell text-6xl text-white"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-heartbeat text-3xl text-red-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">AI-ассистент фитнес-тренера</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Элитный AI-консультант для фитнес-тренеров. Планы тренировок, питание, психология клиента за 15 минут вместо 5-7 часов.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-red-400 font-semibold">от 3000₽</span>
+                        <span class="text-sm text-gray-400">моментально</span>
+                    </div>
+                </div>
+
                 <!-- Custom Solutions -->
                 <div class="service-card rounded-2xl p-6" onclick="openServiceModal('custom')">
                     <div class="mb-6">
@@ -290,7 +387,7 @@
                         <h3 class="text-2xl font-bold">Кастомные решения</h3>
                     </div>
                     <p class="text-gray-300 mb-6">
-                        Индивидуальные разработки под ваши задачи. 
+                        Индивидуальные разработки под ваши задачи.
                         Любые интеграции и автоматизации.
                     </p>
                     <div class="flex justify-between items-center">
