@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Services Platform - Профессиональные цифровые услуги</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.net.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+        }
+        
+        .vanta-canvas {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 1;
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0, 212, 170, 0.2);
+            border-color: rgba(0, 212, 170, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4aa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4aa, #8b5cf6);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 170, 0.3);
+        }
+        
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black bg-opacity-90 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold gradient-text">Digital Services</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#services" class="hover:text-teal-400 transition-colors">Услуги</a>
+                    <a href="#examples" class="hover:text-teal-400 transition-colors">Примеры</a>
+                    <a href="#process" class="hover:text-teal-400 transition-colors">Процесс</a>
+                    <a href="#faq" class="hover:text-teal-400 transition-colors">FAQ</a>
+                </div>
+                <button onclick="window.open('https://t.me/insinm', '_blank')" class="btn-primary px-6 py-2 rounded-full text-white font-semibold">
+                    Написать в Telegram
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center relative pt-20" id="hero">
+        <div class="content-overlay container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <h1 class="text-5xl lg:text-7xl font-bold leading-tight">
+                        <span class="gradient-text">Цифровые услуги</span><br>
+                        нового поколения
+                    </h1>
+                    <p class="text-xl text-gray-300 leading-relaxed">
+                        Профессиональные AI-инструменты и ручная работа для вашего бизнеса. 
+                        От транскрибации до маркетинговых стратегий - все в одном месте.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="scrollToServices()" class="btn-primary px-8 py-4 rounded-full text-white font-semibold text-lg">
+                            Посмотреть услуги
+                        </button>
+                        <button onclick="window.open('https://t.me/insinm', '_blank')" class="border border-teal-400 px-8 py-4 rounded-full text-teal-400 font-semibold text-lg hover:bg-teal-400 hover:text-black transition-all">
+                            Получить консультацию
+                        </button>
+                    </div>
+                </div>
+                <div class="floating-animation">
+                    <div class="relative">
+                        <img src="resources/transcription-hero.png" alt="AI Services" class="w-full h-auto rounded-2xl shadow-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-2xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Наши услуги</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Современные цифровые решения, которые помогут вашему бизнесу расти и развиваться
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Transcription Service -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('transcription')">
+                    <div class="mb-6">
+                        <img src="resources/transcription-hero.png" alt="Транскрибация" class="w-full h-48 object-cover rounded-xl">
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-microphone-alt text-3xl text-teal-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">Главный Транскрибатор</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        AI-транскрибация YouTube видео с автоматическим разметкой заголовками. 
+                        Быстро, точно, профессионально.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-teal-400 font-semibold">от 500₽</span>
+                        <span class="text-sm text-gray-400">1-2 часа</span>
+                    </div>
+                </div>
+
+                <!-- YouTube Thumbnails -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('thumbnails')">
+                    <div class="mb-6">
+                        <img src="resources/thumbnails-hero.png" alt="Превью YouTube" class="w-full h-48 object-cover rounded-xl">
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-image text-3xl text-purple-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">Директор по превью</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Красивые и привлекательные превью для YouTube. 
+                        Повышаем CTR и привлекаем внимание зрителей.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-purple-400 font-semibold">от 300₽</span>
+                        <span class="text-sm text-gray-400">30 минут</span>
+                    </div>
+                </div>
+
+                <!-- Marketplace Cards -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('marketplace')">
+                    <div class="mb-6">
+                        <img src="resources/marketplace-hero.png" alt="Карточки товаров" class="w-full h-48 object-cover rounded-xl">
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-shopping-cart text-3xl text-green-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">Маркетплейс-продюсер</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Создание продающих карточек товаров для маркетплейсов. 
+                        От 7 до 10 вариантов на заказ.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-green-400 font-semibold">от 2000₽</span>
+                        <span class="text-sm text-gray-400">1-2 дня</span>
+                    </div>
+                </div>
+
+                <!-- Personality Analysis -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('personality')">
+                    <div class="mb-6">
+                        <img src="resources/personality-hero.png" alt="Распаковка личности" class="w-full h-48 object-cover rounded-xl">
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-brain text-3xl text-blue-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">Распаковка личности</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        AI-анализ личности с выдачей 5 концептов продукта. 
+                        Глубокое понимание сильных и слабых сторон.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-blue-400 font-semibold">от 1500₽</span>
+                        <span class="text-sm text-gray-400">2-3 часа</span>
+                    </div>
+                </div>
+
+                <!-- Marketing Services -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('marketing')">
+                    <div class="mb-6">
+                        <img src="resources/marketing-hero.png" alt="Маркетинг" class="w-full h-48 object-cover rounded-xl">
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-chart-line text-3xl text-orange-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">Маркетолог</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Комплекс маркетинговых услуг: от стратегии до внедрения. 
+                        Флагманские продукты и автоворонки.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-orange-400 font-semibold">от 5000₽</span>
+                        <span class="text-sm text-gray-400">1 неделя</span>
+                    </div>
+                </div>
+
+                <!-- Custom Solutions -->
+                <div class="service-card rounded-2xl p-6" onclick="openServiceModal('custom')">
+                    <div class="mb-6">
+                        <div class="w-full h-48 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-cogs text-6xl text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-magic text-3xl text-pink-400 mr-4"></i>
+                        <h3 class="text-2xl font-bold">Кастомные решения</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Индивидуальные разработки под ваши задачи. 
+                        Любые интеграции и автоматизации.
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-pink-400 font-semibold">договорная</span>
+                        <span class="text-sm text-gray-400">по согласованию</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Как это работает</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Простой и прозрачный процесс от заказа до получения результата
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-r from-teal-400 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">1</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Выбор услуги</h3>
+                    <p class="text-gray-300">Ознакомьтесь с нашими услугами и выберите подходящую</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">2</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Связь в Telegram</h3>
+                    <p class="text-gray-300">Напишите нам для уточнения деталей и получения консультации</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-r from-pink-500 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">3</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Выполнение</h3>
+                    <p class="text-gray-300">Мы приступаем к работе и выполняем в срок</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-gradient-to-r from-orange-500 to-teal-400 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <span class="text-2xl font-bold text-white">4</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Результат</h3>
+                    <p class="text-gray-300">Получите готовый продукт и рекомендации по использованию</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Часто задаваемые вопросы</span>
+                </h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="bg-gray-800 rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4">Как быстро вы выполняете заказы?</h3>
+                    <p class="text-gray-300">Сроки зависят от сложности услуги. Транскрибация занимает 1-2 часа, создание превью - 30 минут, маркетинговые услуги - от 1 недели.</p>
+                </div>
+                <div class="bg-gray-800 rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4">Можно ли увидеть примеры работ?</h3>
+                    <p class="text-gray-300">Да, у нас есть портфолио с примерами всех услуг. Также мы можем сделать тестовый вариант для ознакомления.</p>
+                </div>
+                <div class="bg-gray-800 rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4">Как происходит оплата?</h3>
+                    <p class="text-gray-300">Работаем по предоплате 50% или полной оплате. Принимаем переводы на карту, ЮMoney, криптовалюту.</p>
+                </div>
+                <div class="bg-gray-800 rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4">Делаете ли вы доработки?</h3>
+                    <p class="text-gray-300">Да, мы предоставляем 2 бесплатные итерации доработок для каждого проекта. Дополнительные правки обсуждаются индивидуально.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="text-3xl font-bold gradient-text mb-6">Digital Services Platform</div>
+                <p class="text-gray-300 mb-8">Профессиональные цифровые услуги для вашего бизнеса</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <button onclick="openTelegram()" class="text-teal-400 hover:text-teal-300 text-2xl">
+                        <i class="fab fa-telegram"></i>
+                    </button>
+                    <button onclick="alert('WhatsApp: +7 (999) 123-45-67')" class="text-green-400 hover:text-green-300 text-2xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button onclick="alert('Email: info@digitalservices.ru')" class="text-blue-400 hover:text-blue-300 text-2xl">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </div>
+                <p class="text-gray-500">© 2024 Digital Services Platform. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Service Modal -->
+    <div id="serviceModal" class="modal">
+        <div class="modal-content relative">
+            <button class="close-modal" onclick="closeServiceModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

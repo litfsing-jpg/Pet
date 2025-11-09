@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Все услуги - Digital Services Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4aa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 170, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 212, 170, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-black bg-opacity-90 backdrop-blur-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold gradient-text">Digital Services</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-teal-400 transition-colors">Главная</a>
+                    <a href="services.html" class="text-teal-400">Услуги</a>
+                    <a href="examples.html" class="hover:text-teal-400 transition-colors">Примеры</a>
+                    <a href="contact.html" class="hover:text-teal-400 transition-colors">Контакты</a>
+                </div>
+                <button onclick="window.open('https://t.me/insinm', '_blank')" class="bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-2 rounded-full text-white font-semibold hover:shadow-lg transition-all">
+                    Написать в Telegram
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-black">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-5xl font-bold mb-6">
+                <span class="gradient-text">Все наши услуги</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                Полный спектр цифровых услуг для развития вашего бизнеса и личного бренда
+            </p>
+        </div>
+    </section>
+
+    <!-- Services Grid -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Transcription Service -->
+                <div class="service-card rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <img src="resources/transcription-hero.png" alt="Транскрибация" class="w-20 h-20 rounded-xl mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Главный Транскрибатор</h3>
+                            <span class="text-teal-400 font-semibold">от 500₽</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Профессиональная AI-транскрибация YouTube видео с автоматическим разметкой заголовками. 
+                        Получите структурированный текст из любого видео за минимальное время.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-teal-400 mb-2">Возможности:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Точная транскрибация</li>
+                                <li>• Автоматические заголовки</li>
+                                <li>• Поддержка всех форматов</li>
+                                <li>• Редактирование текста</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-400 mb-2">Преимущества:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Экономия времени</li>
+                                <li>• Высокая точность</li>
+                                <li>• Быстрая обработка</li>
+                                <li>• Профессиональный результат</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-teal-400 to-purple-500 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
+                        Заказать транскрибацию
+                    </button>
+                </div>
+
+                <!-- YouTube Thumbnails -->
+                <div class="service-card rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <img src="resources/thumbnails-hero.png" alt="Превью YouTube" class="w-20 h-20 rounded-xl mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Директор по превью</h3>
+                            <span class="text-purple-400 font-semibold">от 300₽</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Создание привлекательных превью для YouTube видео, которые значительно увеличивают 
+                        CTR и привлекают больше зрителей на ваш контент.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-teal-400 mb-2">Возможности:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Современный дизайн</li>
+                                <li>• 3 варианта на выбор</li>
+                                <li>• Соответствие трендам</li>
+                                <li>• Оптимизация под CTR</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-400 mb-2">Результаты:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Увеличение просмотров</li>
+                                <li>• Рост подписчиков</li>
+                                <li>• Профессиональный вид</li>
+                                <li>• Конкурентные преимущества</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-purple-400 to-pink-500 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
+                        Заказать превью
+                    </button>
+                </div>
+
+                <!-- Marketplace Cards -->
+                <div class="service-card rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <img src="resources/marketplace-hero.png" alt="Карточки товаров" class="w-20 h-20 rounded-xl mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Маркетплейс-продюсер</h3>
+                            <span class="text-green-400 font-semibold">от 2000₽</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Создание продающих карточек товаров для маркетплейсов. 
+                        От 7 до 10 вариантов с проработанными заголовками и описаниями.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-teal-400 mb-2">Включает:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• 7-10 вариантов карточек</li>
+                                <li>• Проработка заголовков</li>
+                                <li>• Оптимизация описаний</li>
+                                <li>• Анализ конкурентов</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-400 mb-2">Платформы:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Wildberries</li>
+                                <li>• Ozon</li>
+                                <li>• Яндекс.Маркет</li>
+                                <li>• СберМегаМаркет</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-green-400 to-blue-500 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
+                        Заказать карточки
+                    </button>
+                </div>
+
+                <!-- Personality Analysis -->
+                <div class="service-card rounded-2xl p-8">
+                    <div class="flex items-center mb-6">
+                        <img src="resources/personality-hero.png" alt="Распаковка личности" class="w-20 h-20 rounded-xl mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Распаковка личности</h3>
+                            <span class="text-blue-400 font-semibold">от 1500₽</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Глубокий AI-анализ личности с выдачей 5 концептов продукта. 
+                        Понимание сильных и слабых сторон для развития бизнеса.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-teal-400 mb-2">Анализируем:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• 8 ключевых параметров</li>
+                                <li>• Сильные стороны</li>
+                                <li>• Зоны роста</li>
+                                <li>• Рекомендации</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-400 mb-2">Результат:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• 5 концептов продукта</li>
+                                <li>• Стратегия развития</li>
+                                <li>• Персональные советы</li>
+                                <li>• План действий</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-blue-400 to-purple-500 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
+                        Заказать анализ
+                    </button>
+                </div>
+
+                <!-- Marketing Services -->
+                <div class="service-card rounded-2xl p-8 lg:col-span-2">
+                    <div class="flex items-center mb-6">
+                        <img src="resources/marketing-hero.png" alt="Маркетинг" class="w-20 h-20 rounded-xl mr-6">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">Маркетолог</h3>
+                            <span class="text-orange-400 font-semibold">от 5000₽</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Комплекс маркетинговых услуг: от стратегии до внедрения. 
+                        Создание флагманских продуктов, автоворонок и рекламных кампаний.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-teal-400 mb-2">Стратегия:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Маркетинговый план</li>
+                                <li>• Анализ ЦА</li>
+                                <li>• Позиционирование</li>
+                                <li>• Конкурентный анализ</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-purple-400 mb-2">Внедрение:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Флагманский продукт</li>
+                                <li>• Автоворонки</li>
+                                <li>• Рекламные кампании</li>
+                                <li>• Аналитика</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h4 class="font-bold text-orange-400 mb-2">Результаты:</h4>
+                            <ul class="text-sm text-gray-300 space-y-1">
+                                <li>• Рост продаж</li>
+                                <li>• Увеличение лида</li>
+                                <li>• Оптимизация расходов</li>
+                                <li>• Масштабирование</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-orange-400 to-red-500 py-3 rounded-xl text-white font-semibold hover:shadow-lg transition-all">
+                        Заказать маркетинг
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-teal-900 to-purple-900">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">Не нашли подходящую услугу?</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Мы можем создать индивидуальное решение под ваши задачи. 
+                Расскажите о вашем проекте и мы предложим оптимальный вариант.
+            </p>
+            <button onclick="window.open('https://t.me/insinm', '_blank')" class="bg-white text-black px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all">
+                Обсудить проект
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="text-3xl font-bold gradient-text mb-6">Digital Services Platform</div>
+                <p class="text-gray-300 mb-8">Профессиональные цифровые услуги для вашего бизнеса</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="text-teal-400 hover:text-teal-300 text-2xl">
+                        <i class="fab fa-telegram"></i>
+                    </button>
+                    <button onclick="alert('WhatsApp: +7 (999) 123-45-67')" class="text-green-400 hover:text-green-300 text-2xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button onclick="alert('Email: info@digitalservices.ru')" class="text-blue-400 hover:text-blue-300 text-2xl">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </div>
+                <p class="text-gray-500">© 2024 Digital Services Platform. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

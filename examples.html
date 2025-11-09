@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Примеры работ - Digital Services Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: #0a0a0a;
+            color: #ffffff;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #00d4aa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .example-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 170, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 212, 170, 0.2);
+        }
+        
+        .vanta-canvas {
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            z-index: 1;
+        }
+        
+        .content-overlay {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-black bg-opacity-90 backdrop-blur-md sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="index.html" class="text-2xl font-bold gradient-text">Digital Services</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="hover:text-teal-400 transition-colors">Главная</a>
+                    <a href="services.html" class="hover:text-teal-400 transition-colors">Услуги</a>
+                    <a href="examples.html" class="text-teal-400">Примеры</a>
+                    <a href="contact.html" class="hover:text-teal-400 transition-colors">Контакты</a>
+                </div>
+                <button onclick="window.open('https://t.me/your_telegram_username', '_blank')" class="bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-2 rounded-full text-white font-semibold hover:shadow-lg transition-all">
+                    Написать в Telegram
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center" id="hero">
+        <div class="content-overlay container mx-auto px-6">
+            <div class="text-center">
+                <h1 class="text-5xl lg:text-7xl font-bold mb-8">
+                    <span class="gradient-text">Примеры наших работ</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
+                    Ознакомьтесь с нашими кейсами и примерами работ. 
+                    Качество и профессионализм - наши главные приоритеты.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="scrollToExamples()" class="bg-gradient-to-r from-teal-400 to-purple-500 px-8 py-4 rounded-full text-white font-semibold text-lg hover:shadow-xl transition-all">
+                        Смотреть примеры
+                    </button>
+                    <button onclick="window.open('https://t.me/your_telegram_username', '_blank')" class="border border-teal-400 px-8 py-4 rounded-full text-teal-400 font-semibold text-lg hover:bg-teal-400 hover:text-black transition-all">
+                        Обсудить проект
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section id="examples" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Наше портфолио</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Реальные кейсы и примеры работ, которые мы выполнили для наших клиентов
+                </p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button onclick="filterExamples('all')" class="filter-btn active bg-teal-500 text-white px-6 py-3 rounded-full font-semibold">
+                    Все работы
+                </button>
+                <button onclick="filterExamples('transcription')" class="filter-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-full font-semibold hover:bg-teal-500 hover:text-white transition-all">
+                    Транскрибация
+                </button>
+                <button onclick="filterExamples('thumbnails')" class="filter-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-full font-semibold hover:bg-teal-500 hover:text-white transition-all">
+                    Превью YouTube
+                </button>
+                <button onclick="filterExamples('marketplace')" class="filter-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-full font-semibold hover:bg-teal-500 hover:text-white transition-all">
+                    Карточки товаров
+                </button>
+                <button onclick="filterExamples('marketing')" class="filter-btn bg-gray-700 text-gray-300 px-6 py-3 rounded-full font-semibold hover:bg-teal-500 hover:text-white transition-all">
+                    Маркетинг
+                </button>
+            </div>
+
+            <!-- Examples Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Transcription Examples -->
+                <div class="example-card rounded-2xl overflow-hidden" data-category="transcription" onclick="openExampleModal('transcription-1')">
+                    <div class="h-48 bg-gradient-to-br from-teal-600 to-teal-800 flex items-center justify-center">
+                        <i class="fas fa-microphone-alt text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Транскрибация интервью</h3>
+                        <p class="text-gray-300 mb-4">Преобразование 45-минутного интервью в структурированный текст с заголовками</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-teal-400 font-semibold">Транскрибация</span>
+                            <span class="text-sm text-gray-400">45 минут</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-2xl overflow-hidden" data-category="transcription" onclick="openExampleModal('transcription-2')">
+                    <div class="h-48 bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center">
+                        <i class="fas fa-podcast text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Транскрибация подкаста</h3>
+                        <p class="text-gray-300 mb-4">Обработка 1-часового подкаста с разметкой по темам и спикерам</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-teal-400 font-semibold">Транскрибация</span>
+                            <span class="text-sm text-gray-400">60 минут</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thumbnail Examples -->
+                <div class="example-card rounded-2xl overflow-hidden" data-category="thumbnails" onclick="openExampleModal('thumbnail-1')">
+                    <div class="h-48 bg-gradient-to-br from-pink-500 to-red-500 flex items-center justify-center">
+                        <i class="fas fa-image text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Превью для блога</h3>
+                        <p class="text-gray-300 mb-4">Яркое и привлекательное превью для видео о путешествиях</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-400 font-semibold">Превью YouTube</span>
+                            <span class="text-sm text-gray-400">CTR +35%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-2xl overflow-hidden" data-category="thumbnails" onclick="openExampleModal('thumbnail-2')">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center">
+                        <i class="fas fa-play text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Превью для обзора</h3>
+                        <p class="text-gray-300 mb-4">Профессиональное превью для обзора технологий</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-400 font-semibold">Превью YouTube</span>
+                            <span class="text-sm text-gray-400">CTR +42%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketplace Examples -->
+                <div class="example-card rounded-2xl overflow-hidden" data-category="marketplace" onclick="openExampleModal('marketplace-1')">
+                    <div class="h-48 bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center">
+                        <i class="fas fa-shopping-bag text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Карточки для Wildberries</h3>
+                        <p class="text-gray-300 mb-4">Набор из 8 продающих карточек для категории "Дом и сад"</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-400 font-semibold">Карточки товаров</span>
+                            <span class="text-sm text-gray-400">+150% продаж</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-2xl overflow-hidden" data-category="marketplace" onclick="openExampleModal('marketplace-2')">
+                    <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                        <i class="fas fa-store text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Карточки для Ozon</h3>
+                        <p class="text-gray-300 mb-4">10 вариантов карточек для электроники и гаджетов</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-400 font-semibold">Карточки товаров</span>
+                            <span class="text-sm text-gray-400">+200% продаж</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketing Examples -->
+                <div class="example-card rounded-2xl overflow-hidden" data-category="marketing" onclick="openExampleModal('marketing-1')">
+                    <div class="h-48 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center">
+                        <i class="fas fa-chart-line text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Маркетинг для онлайн-школы</h3>
+                        <p class="text-gray-300 mb-4">Комплексная стратегия с запуском рекламы и автоворонок</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-400 font-semibold">Маркетинг</span>
+                            <span class="text-sm text-gray-400">ROI 350%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card rounded-2xl overflow-hidden" data-category="marketing" onclick="openExampleModal('marketing-2')">
+                    <div class="h-48 bg-gradient-to-br from-teal-500 to-green-600 flex items-center justify-center">
+                        <i class="fas fa-rocket text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Запуск курса</h3>
+                        <p class="text-gray-300 mb-4">Полный цикл запуска онлайн-курса от стратегии до продаж</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-orange-400 font-semibold">Маркетинг</span>
+                            <span class="text-sm text-gray-400">1M+ выручки</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personality Analysis Example -->
+                <div class="example-card rounded-2xl overflow-hidden" data-category="personality" onclick="openExampleModal('personality-1')">
+                    <div class="h-48 bg-gradient-to-br from-blue-500 to-teal-600 flex items-center justify-center">
+                        <i class="fas fa-brain text-6xl text-white"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Анализ предпринимателя</h3>
+                        <p class="text-gray-300 mb-4">Распаковка личности с выдачей 5 концептов продукта</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-blue-400 font-semibold">Распаковка личности</span>
+                            <span class="text-sm text-gray-400">8 параметров</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-purple-900 to-teal-900">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">Хотите такой же результат?</h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Мы готовы помочь вам достичь таких же результатов или даже лучше. 
+                Свяжитесь с нами и начните работу над вашим проектом уже сегодня.
+            </p>
+            <button onclick="window.open('https://t.me/insinm', '_blank')" class="bg-white text-black px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all">
+                Начать проект
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="text-3xl font-bold gradient-text mb-6">Digital Services Platform</div>
+                <p class="text-gray-300 mb-8">Профессиональные цифровые услуги для вашего бизнеса</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="text-teal-400 hover:text-teal-300 text-2xl">
+                        <i class="fab fa-telegram"></i>
+                    </button>
+                    <button onclick="alert('WhatsApp: +7 (999) 123-45-67')" class="text-green-400 hover:text-green-300 text-2xl">
+                        <i class="fab fa-whatsapp"></i>
+                    </button>
+                    <button onclick="alert('Email: info@digitalservices.ru')" class="text-blue-400 hover:text-blue-300 text-2xl">
+                        <i class="fas fa-envelope"></i>
+                    </button>
+                </div>
+                <p class="text-gray-500">© 2024 Digital Services Platform. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Example Modal -->
+    <div id="exampleModal" class="modal">
+        <div class="modal-content relative">
+            <button class="absolute top-4 right-4 text-white text-2xl" onclick="closeExampleModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalExampleContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Vanta.js background
+        VANTA.BIRDS({
+            el: "#hero",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            backgroundColor: 0x0a0a0a,
+            color1: 0x00d4aa,
+            color2: 0x8b5cf6,
+            colorMode: "lerp",
+            birdSize: 1.20,
+            wingSpan: 25.00,
+            speedLimit: 3.00,
+            separation: 20.00,
+            alignment: 20.00,
+            cohesion: 20.00,
+            quantity: 3.00
+        });
+
+        function scrollToExamples() {
+            document.getElementById('examples').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function filterExamples(category) {
+            const cards = document.querySelectorAll('.example-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update button states
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-teal-500', 'text-white');
+                btn.classList.add('bg-gray-700', 'text-gray-300');
+            });
+            
+            event.target.classList.remove('bg-gray-700', 'text-gray-300');
+            event.target.classList.add('active', 'bg-teal-500', 'text-white');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 300);
+                }
+            });
+        }
+
+        function openExampleModal(exampleId) {
+            const modal = document.getElementById('exampleModal');
+            const modalContent = document.getElementById('modalExampleContent');
+            
+            const examples = {
+                'transcription-1': {
+                    title: 'Транскрибация интервью',
+                    description: 'Полная транскрибация 45-минутного интервью с разметкой по спикерам и темам',
+                    details: 'Работа выполнена для бизнес-подкаста. Интервью с успешным предпринимателем о запуске стартапа.',
+                    features: [
+                        'Точная транскрибация всего аудио',
+                        'Разметка по спикерам (ведущий и гость)',
+                        'Структурирование по темам',
+                        'Выделение ключевых мыслей',
+                        'Форматирование для публикации'
+                    ],
+                    result: 'Клиент получил готовый материал для публикации на сайте и в блоге, что значительно увеличило охват аудитории.'
+                },
+                'transcription-2': {
+                    title: 'Транскрибация подкаста',
+                    description: 'Обработка 1-часового подкаста с разметкой по темам и временным меткам',
+                    details: 'Подкаст об образовании и саморазвитии. Необходимо было создать текст для блога и цитаты для социальных сетей.',
+                    features: [
+                        'Полная транскрибация 60 минут',
+                        'Временные метки каждые 5 минут',
+                        'Разделение по тематическим блокам',
+                        'Выделение цитат для соцсетей',
+                        'Оптимизация для SEO'
+                    ],
+                    result: 'Транскрипт использован для создания 5 статей в блоге и месячного контент-плана в социальных сетях.'
+                },
+                'thumbnail-1': {
+                    title: 'Превью для блога о путешествиях',
+                    description: 'Яркое и привлекательное превью, которое увеличило CTR на 35%',
+                    details: 'Создание превью для видео о путешествии в Исландию. Основная задача - передать эмоции и привлечь внимание.',
+                    features: [
+                        'Яркие цвета и контраст',
+                        'Крупный и читаемый текст',
+                        'Эмоциональное фото в кадре',
+                        'Соответствие бренду канала',
+                        'Оптимизация под мобильные устройства'
+                    ],
+                    result: 'CTR видео увеличился на 35%, количество просмотров выросло на 50% по сравнению с предыдущими видео.'
+                },
+                'thumbnail-2': {
+                    title: 'Превью для обзора технологий',
+                    description: 'Профессиональное превью для технического обзора, CTR +42%',
+                    details: 'Обзор нового смартфона. Необходимо создать превью, которое будет выделяться среди конкурентов.',
+                    features: [
+                        'Минималистичный дизайн',
+                        'Фокус на продукте',
+                        'Технологичный стиль',
+                        'Четкая иерархия информации',
+                        'Призыв к действию'
+                    ],
+                    result: 'Видео набрало 100K+ просмотров за первую неделю, CTR составил 12.5%, что на 42% выше среднего по каналу.'
+                },
+                'marketplace-1': {
+                    title: 'Карточки для Wildberries',
+                    description: 'Набор из 8 продающих карточек для категории "Дом и сад"',
+                    details: 'Клиент занимается продажей товаров для дома и сада. Необходимо было создать карточки для новой линейки продукции.',
+                    features: [
+                        '8 уникальных карточек',
+                        'Проработка заголовков',
+                        'Оптимизация под поиск WB',
+                        'Анализ конкурентов',
+                        'Фокус на преимуществах товара'
+                    ],
+                    result: 'Продажи увеличились на 150% за первый месяц, товары вышли в ТОП-10 по ключевым запросам.'
+                },
+                'marketplace-2': {
+                    title: 'Карточки для Ozon',
+                    description: '10 вариантов карточек для электроники и гаджетов',
+                    details: 'Магазин электроники и гаджетов. Необходимо было создать карточки для 10 новых позиций.',
+                    features: [
+                        '10 карточек с уникальным дизайном',
+                        'Технические характеристики',
+                        'Сравнение с аналогами',
+                        'Отзывы и рейтинги',
+                        'Специальные предложения'
+                    ],
+                    result: 'Рост продаж на 200%, средний чек увеличился на 30%, товары получили статус "Проверенный продавец".'
+                },
+                'marketing-1': {
+                    title: 'Маркетинг для онлайн-школы',
+                    description: 'Комплексная стратегия с запуском рекламы и автоворонок, ROI 350%',
+                    details: 'Онлайн-школа иностранных языков. Необходимо было увеличить количество студентов и оптимизировать расходы на маркетинг.',
+                    features: [
+                        'Разработка маркетинговой стратегии',
+                        'Создание флагманского курса',
+                        'Настройка рекламы в соцсетях',
+                        'Создание автоворонок',
+                        'Внедрение аналитики'
+                    ],
+                    result: 'ROI 350%, количество студентов увеличилось на 400%, расходы на привлечение клиента снизились на 60%.'
+                },
+                'marketing-2': {
+                    title: 'Запуск курса по фотографии',
+                    description: 'Полный цикл запуска онлайн-курса, выручка 1M+ рублей',
+                    details: 'Профессиональный фотограф хотел запустить онлайн-курс. Необходимо было все сделать "под ключ" - от стратегии до продаж.',
+                    features: [
+                        'Разработка концепции курса',
+                        'Создание маркетинговой воронки',
+                        'Запуск рекламных кампаний',
+                        'Настройка автоматизаций',
+                        'Сопровождение запуска'
+                    ],
+                    result: 'Выручка за первый поток составила 1.2M рублей, 500+ студентов, запущено 3 последующих потока.'
+                },
+                'personality-1': {
+                    title: 'Анализ предпринимателя',
+                    description: 'Распаковка личности с выдачей 5 концептов продукта на основе 8 параметров',
+                    details: 'Предприниматель в сфере IT, хотел понять свои сильные стороны и найти новые направления для бизнеса.',
+                    features: [
+                        'Анализ 8 ключевых параметров личности',
+                        'Выявление сильных сторон',
+                        'Определение зон роста',
+                        'Разработка 5 концептов продукта',
+                        'Рекомендации по развитию'
+                    ],
+                    result: 'Клиент запустил 2 новых направления в бизнесе, которые приносят 40% дополнительной выручки.'
+                }
+            };
+
+            const example = examples[exampleId];
+            if (!example) return;
+
+            modalContent.innerHTML = `
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold gradient-text mb-4">${example.title}</h2>
+                    <p class="text-gray-300 text-lg">${example.description}</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">О проекте:</h3>
+                    <p class="text-gray-300 mb-6">${example.details}</p>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Что было сделано:</h3>
+                    <ul class="space-y-2">
+                        ${example.features.map(feature => `
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-teal-400 mr-3"></i>
+                                <span class="text-gray-300">${feature}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold mb-4">Результат:</h3>
+                    <div class="bg-gray-800 rounded-xl p-4">
+                        <p class="text-gray-300">${example.result}</p>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="bg-gradient-to-r from-teal-400 to-purple-500 px-8 py-4 rounded-full text-white font-semibold text-lg mr-4">
+                        Заказать такую же услугу
+                    </button>
+                    <button onclick="closeExampleModal()" class="border border-gray-500 px-8 py-4 rounded-full text-gray-300 font-semibold text-lg hover:bg-gray-700 transition-all">
+                        Закрыть
+                    </button>
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeExampleModal() {
+            const modal = document.getElementById('exampleModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        document.getElementById('exampleModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeExampleModal();
+            }
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeExampleModal();
+            }
+        });
+    </script>
+</body>
+</html>
