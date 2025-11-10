@@ -120,11 +120,29 @@
 
         .mobile-menu-btn {
             display: none;
+            background: rgba(0, 212, 170, 0.2);
+            border: 2px solid #00d4aa;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(0, 212, 170, 0.3);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-btn i {
+            color: #ffffff !important;
+            font-size: 1.5rem;
         }
 
         @media (max-width: 768px) {
             .mobile-menu-btn {
-                display: block;
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
             }
         }
 
@@ -166,7 +184,7 @@
                         Написать в Telegram
                     </button>
                     <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileMenu()" class="mobile-menu-btn text-white text-2xl focus:outline-none">
+                    <button onclick="toggleMobileMenu()" class="mobile-menu-btn" aria-label="Меню">
                         <i class="fas fa-bars" id="menuIcon"></i>
                     </button>
                 </div>
