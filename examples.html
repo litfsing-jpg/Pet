@@ -81,6 +81,86 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+
+        /* Mobile Menu Styles */
+        .mobile-menu-btn {
+            display: none;
+            background: rgba(0, 212, 170, 0.2);
+            border: 2px solid #00d4aa;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(0, 212, 170, 0.3);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-btn i {
+            color: #ffffff !important;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 40;
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .mobile-menu a:hover {
+            background: rgba(0, 212, 170, 0.2);
+            color: #00d4aa;
+        }
+
+        .mobile-menu button {
+            background: linear-gradient(to right, #00d4aa, #8b5cf6);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 212, 170, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+        }
     </style>
 </head>
 <body>
@@ -96,12 +176,29 @@
                     <a href="examples.html" class="text-teal-400">Примеры</a>
                     <a href="contact.html" class="hover:text-teal-400 transition-colors">Контакты</a>
                 </div>
-                <button onclick="window.open('https://t.me/your_telegram_username', '_blank')" class="bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-2 rounded-full text-white font-semibold hover:shadow-lg transition-all">
-                    Написать в Telegram
-                </button>
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleMobileMenu()" class="mobile-menu-btn" aria-label="Меню">
+                        <i class="fas fa-bars" id="menuIcon"></i>
+                    </button>
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="hidden md:block bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-2 rounded-full text-white font-semibold hover:shadow-lg transition-all">
+                        Написать в Telegram
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <a href="index.html">Главная</a>
+        <a href="services.html">Услуги</a>
+        <a href="blog.html">Блог</a>
+        <a href="examples.html" class="text-teal-400">Примеры</a>
+        <a href="contact.html">Контакты</a>
+        <button onclick="window.open('https://t.me/insinm', '_blank')">
+            <i class="fab fa-telegram mr-2"></i>Написать в Telegram
+        </button>
+    </div>
 
     <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center" id="hero">
@@ -589,6 +686,33 @@
             if (e.key === 'Escape') {
                 closeExampleModal();
             }
+        });
+
+        // Mobile menu toggle function
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+
+            menu.classList.toggle('active');
+
+            if (menu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                const menu = document.getElementById('mobileMenu');
+                const icon = document.getElementById('menuIcon');
+                menu.classList.remove('active');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
         });
     </script>
 </body>
