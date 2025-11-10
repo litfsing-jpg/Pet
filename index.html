@@ -260,6 +260,154 @@
                 margin: 0.5rem 0 !important;
             }
         }
+
+        /* Плавающая кнопка Play */
+        .floating-play-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #00d4aa, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .floating-play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(0, 212, 170, 0.6);
+        }
+
+        .floating-play-btn i {
+            color: white;
+            font-size: 1.8rem;
+            margin-left: 4px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 8px 25px rgba(0, 212, 170, 0.4);
+            }
+            50% {
+                box-shadow: 0 8px 35px rgba(0, 212, 170, 0.7);
+            }
+        }
+
+        /* Модальное окно для видео */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 212, 170, 0.3);
+        }
+
+        .video-modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-modal-close {
+            position: absolute;
+            top: -3rem;
+            right: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Адаптация для мобильных */
+        @media (max-width: 768px) {
+            .floating-play-btn {
+                width: 60px;
+                height: 60px;
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .floating-play-btn i {
+                font-size: 1.5rem;
+            }
+
+            .video-modal-content {
+                max-width: 95%;
+            }
+
+            .video-modal-close {
+                top: -2.5rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1.25rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .floating-play-btn {
+                width: 55px;
+                height: 55px;
+                bottom: 1rem;
+                right: 1rem;
+            }
+
+            .floating-play-btn i {
+                font-size: 1.3rem;
+            }
+
+            .video-modal {
+                padding: 0.5rem;
+            }
+
+            .video-modal-close {
+                top: -2rem;
+                width: 35px;
+                height: 35px;
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -591,6 +739,26 @@
         </div>
     </div>
 
+    <!-- Floating Play Button -->
+    <div class="floating-play-btn" onclick="openVideoModal()" title="Смотреть видео">
+        <i class="fas fa-play"></i>
+    </div>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="video-modal">
+        <div class="video-modal-content">
+            <button class="video-modal-close" onclick="closeVideoModal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe
+                id="youtubeVideo"
+                src=""
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
     <script>
         // Mobile menu toggle
         function toggleMobileMenu() {
@@ -627,6 +795,46 @@
                     toggleMobileMenu();
                 }
             });
+        });
+
+        // Video Modal Functions
+        function openVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('youtubeVideo');
+
+            // Set YouTube video URL with autoplay
+            iframe.src = 'https://www.youtube.com/embed/VoaO6uuoWT4?autoplay=1&rel=0';
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('youtubeVideo');
+
+            // Stop video by clearing src
+            iframe.src = '';
+
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close video modal on outside click
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+
+        // Close video modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('videoModal');
+                if (modal.classList.contains('active')) {
+                    closeVideoModal();
+                }
+            }
         });
     </script>
     <script src="main.js"></script>
