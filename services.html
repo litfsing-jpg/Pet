@@ -38,6 +38,72 @@
             box-shadow: 0 10px 30px rgba(0, 212, 170, 0.1);
         }
 
+        /* Мобильное меню */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1.5rem;
+            z-index: 40;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 1rem;
+            color: #ffffff;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: #00d4aa;
+            background: rgba(0, 212, 170, 0.1);
+            padding-left: 1.5rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: rgba(0, 212, 170, 0.2);
+            border: 2px solid #00d4aa;
+            border-radius: 8px;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+            background: rgba(0, 212, 170, 0.3);
+            transform: scale(1.05);
+        }
+
+        .mobile-menu-btn i {
+            color: #ffffff !important;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
         /* Улучшенные отступы для мобильных устройств */
         @media (max-width: 768px) {
             .service-card {
@@ -98,12 +164,30 @@
                     <a href="examples.html" class="hover:text-teal-400 transition-colors">Примеры</a>
                     <a href="contact.html" class="hover:text-teal-400 transition-colors">Контакты</a>
                 </div>
-                <button onclick="window.open('https://t.me/insinm', '_blank')" class="bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-2 rounded-full text-white font-semibold hover:shadow-lg transition-all">
-                    Написать в Telegram
-                </button>
+                <div class="flex items-center gap-4">
+                    <button onclick="window.open('https://t.me/insinm', '_blank')" class="hidden md:block bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-2 rounded-full text-white font-semibold hover:shadow-lg transition-all">
+                        Написать в Telegram
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button onclick="toggleMobileMenu()" class="mobile-menu-btn" aria-label="Меню">
+                        <i class="fas fa-bars" id="menuIcon"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <a href="index.html">Главная</a>
+        <a href="services.html" class="text-teal-400">Услуги</a>
+        <a href="blog.html">Блог</a>
+        <a href="examples.html">Примеры</a>
+        <a href="contact.html">Контакты</a>
+        <button onclick="window.open('https://t.me/insinm', '_blank')" class="w-full bg-gradient-to-r from-teal-400 to-purple-500 px-6 py-3 rounded-full text-white font-semibold hover:shadow-lg transition-all mt-4">
+            <i class="fab fa-telegram mr-2"></i>Написать в Telegram
+        </button>
+    </div>
 
     <!-- Header -->
     <section class="py-20 bg-gradient-to-br from-gray-900 to-black">
@@ -418,5 +502,44 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
+
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            }
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const menuBtn = event.target.closest('.mobile-menu-btn');
+            const isClickInside = menu.contains(event.target) || menuBtn;
+
+            if (!isClickInside && menu.classList.contains('active')) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                const menu = document.getElementById('mobileMenu');
+                if (menu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
